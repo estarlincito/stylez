@@ -4,9 +4,10 @@ import swc from '@swc/core';
 import pkg from 'fast-glob';
 import postcss from 'postcss';
 
-import type { Node } from '../types/index.js';
+import type { Node } from '@/types/index.js';
+
 import sortedRules from './sorted-rules.js';
-import { visit } from './visit.js';
+import { visit } from './visit/index.js';
 
 const { glob } = pkg;
 

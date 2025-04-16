@@ -1,4 +1,4 @@
 ```bash
-pnpm publish --workspace stylezjs-postcss-plugin
-pnpm publish --workspace stylezjs/stylez
+cd packages/stylezjs-postcss-plugin && npm publish --access public
+cd packages/stylez && npm publish --access public
 ```

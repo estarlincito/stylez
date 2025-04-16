@@ -46,3 +46,8 @@ const plugin = ({ patterns }: { patterns: string[] }) => ({
 
 plugin.postcss = true;
 export default plugin;
+
+// void extractStylesFromFiles(['**/*test.js']).then((result) => {
+//   // eslint-disable-next-line no-console
+//   console.log(result.toString());
+// });

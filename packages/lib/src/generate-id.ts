@@ -17,8 +17,9 @@ const generateID = (content: string | number, label: string): string =>
 
 export const toVarKey = (value: string | number) => generateID(value, '--z');
 
-export const toClassName = (props: Record<string, string>) =>
-  generateID(JSON.stringify(props), 'z_');
+export const toClassName = (
+  props: Record<string, string | Record<string, string>>,
+) => generateID(JSON.stringify(props), 'z_');
 
 export const toCssPro = (prop: string) =>
   prop.replace(/([A-Z])/g, (m: string) => `-${m.toLowerCase()}`);

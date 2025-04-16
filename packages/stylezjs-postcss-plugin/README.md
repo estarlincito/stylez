@@ -38,7 +38,7 @@ export default {
 
 ## Usage
 
-### Creating and Using Styled Components
+### Creating and using styles
 
 You can now create dynamic CSS class names and apply them to your React components.
 
@@ -46,14 +46,18 @@ You can now create dynamic CSS class names and apply them to your React componen
 import stylez from '@stylezjs/stylez';
 
 // Define styles
-const styled = stylez.create({
+const styles = stylez.create({
   color: 'red',
   fontSize: '16px',
+  '&::before': {
+    height: '100%',
+    color: 'red',
+  },
 });
 
 // Apply class names to your component
 const Home = () => (
-  <div {...stylez.className(styled)}>
+  <div {...stylez.className(styles)}>
     Remember to keep a clear head in difficult times!
   </div>
 );

@@ -3,15 +3,19 @@ export interface StyleEntry {
   ':root': Record<string, string>;
 }
 
-import type { Node as Node_ } from '@swc/core';
-
 export interface Properties {
   type: 'KeyValueProperty';
-  value: { value: string; type: 'StringLiteral' | 'NumericLiteral' };
-  key: { value: string; type: 'Identifier' };
+  value: {
+    value: string;
+    type: 'StringLiteral' | 'NumericLiteral' | 'ObjectExpression';
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    properties?: any;
+  };
+
+  key: { value: string; type: 'Identifier' | 'StringLiteral' };
 }
 
-export interface Node extends Node_ {
+export interface Node {
   callee: {
     type: 'MemberExpression';
     property: { type: 'Identifier'; value: string };
