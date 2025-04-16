@@ -1,11 +1,11 @@
 // import { default as stylez } from '@stylezjs/stylez';
 
 // stylez.create({
-//   backgroundColor: 'blue',
 //   '& > div': {
 //     height: '100%',
 //     color: 'red',
 //   },
+//   backgroundColor: 'blue',
 // });
 
 // stylez.create({

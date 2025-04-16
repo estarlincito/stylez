@@ -1,6 +1,6 @@
 {
   "name": "@stylezjs/stylez",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Stylez → “Z” of Zero Runtime | A lightweight utility for generating CSS class names dynamically.",
   "type": "module",
   "main": "./dist/esm/index.mjs",
