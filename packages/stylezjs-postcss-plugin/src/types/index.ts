@@ -3,13 +3,19 @@ export interface StyleEntry {
   ':root': Record<string, string>;
 }
 
+interface Value {
+  value: string;
+  type: 'StringLiteral' | 'NumericLiteral' | 'ObjectExpression';
+}
+
 export interface Properties {
   type: 'KeyValueProperty';
-  value: {
-    value: string;
-    type: 'StringLiteral' | 'NumericLiteral' | 'ObjectExpression';
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    properties?: any;
+  value: Value & {
+    properties?: {
+      type: 'KeyValueProperty';
+      key: { value: string; type: 'Identifier' | 'StringLiteral' };
+      value: Value;
+    }[];
   };
 
   key: { value: string; type: 'Identifier' | 'StringLiteral' };
