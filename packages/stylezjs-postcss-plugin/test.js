@@ -5,7 +5,7 @@
 //     height: '100%',
 //     color: 'red',
 //   },
-//   backgroundColor: 'blue',
+//     backgroundColor: 'blue',
 // });
 
 // stylez.create({

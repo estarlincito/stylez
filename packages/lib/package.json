@@ -8,6 +8,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "pnpm lint && tsc",
+    "build:w": "tsc --watch",
     "lint": "eslint --ext .js,.ts . && pnpm tsc --noEmit"
   },
   "devDependencies": {

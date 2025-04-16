@@ -73,15 +73,17 @@ export const visit = ({ node, styles, vars }: Visit) => {
         });
 
         // flat
-        const stylesFlat = Object.fromEntries(
-          Object.entries(flatProps).map(([key, value]) => {
-            const varKey = toVarKey(value);
-            if (!vars.get(varKey)) vars.set(varKey, value);
-            return [toCssPro(key), `var(${toVarKey(value)})`];
-          }),
-        );
+        if (Object.keys(flatProps).length >= num('1')) {
+          const stylesFlat = Object.fromEntries(
+            Object.entries(flatProps).map(([key, value]) => {
+              const varKey = toVarKey(value);
+              if (!vars.get(varKey)) vars.set(varKey, value);
+              return [toCssPro(key), `var(${toVarKey(value)})`];
+            }),
+          );
 
-        if (!styles.has(className)) styles.set(className, stylesFlat);
+          if (!styles.has(className)) styles.set(className, stylesFlat);
+        }
 
         // nested
         if (nestedProps.size > num('0')) {

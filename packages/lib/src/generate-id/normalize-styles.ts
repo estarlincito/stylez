@@ -1,16 +1,16 @@
-import { num } from '@estarlincito/utils';
+/* eslint-disable no-magic-numbers */
 
 export type stylesProps = Record<string, string | Record<string, string>>;
 
-export const normalizeStyles = (styles: stylesProps): stylesProps =>
-  Object.fromEntries(
+export const normalizeStyles = (styles: stylesProps): stylesProps => {
+  const data = Object.fromEntries(
     Object.entries(styles)
       .sort(([keyA], [keyB]) => {
         const isSelectorA = keyA.startsWith('&');
         const isSelectorB = keyB.startsWith('&');
 
-        if (isSelectorA && !isSelectorB) return num('1');
-        if (!isSelectorA && isSelectorB) return num('-1');
+        if (isSelectorA && !isSelectorB) return 1;
+        if (!isSelectorA && isSelectorB) return -1;
 
         return keyA.localeCompare(keyB);
       })
@@ -21,3 +21,6 @@ export const normalizeStyles = (styles: stylesProps): stylesProps =>
           : value,
       ]),
   ) as stylesProps;
+
+  return data;
+};
