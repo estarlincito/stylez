@@ -1,11 +1,5 @@
 import { num } from '@estarlincito/utils';
-import {
-  breakpointsSchema,
-  type FlatCSS,
-  type Styles,
-  toClassName,
-  type Vars,
-} from '@repo/lib';
+import { type FlatCSS, type Styles, toSelector, type Vars } from '@repo/lib';
 
 import { toCssProps } from './css-props.js';
 import { toMediaQuery } from './media-query.js';
@@ -17,12 +11,11 @@ export const generateCssFrom = (styles: Styles[]) => {
   const vars: Vars = new Map<string, string>();
 
   for (const style of styles) {
-    const className = `.${toClassName(style)}`;
+    const className = `.${toSelector(style)}`;
     const props: Record<string, FlatCSS> = {};
     const styleData: [string, Styles][] = Object.entries(style);
     for (const [key, value] of styleData) {
-      if (key === 'breakpoints')
-        breakpoints = breakpointsSchema.parse(value) as Styles['breakpoints'];
+      if (key === 'breakpoints') breakpoints = value as Styles['breakpoints'];
       else if (key.startsWith('@')) {
         const [flat, nested] = toCssProps(value, className, vars);
         css.push({ [key]: { ...flat, ...nested } });

@@ -1,30 +1,23 @@
 {
   "name": "@stylezjs/stylez",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Stylez → “Z” of Zero Runtime | A lightweight utility for generating CSS class names dynamically.",
   "type": "module",
   "main": "./dist/cjs/index.cjs",
   "module": "./dist/esm/index.mjs",
   "exports": {
     ".": {
-      "import": {
-        "types": "./dist/types/index.d.ts",
-        "default": "./dist/esm/index.mjs"
-      },
-      "require": {
-        "types": "./dist/types/index.d.ts",
-        "default": "./dist/cjs/index.cjs"
-      }
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/cjs/index.cjs"
     }
   },
   "types": "./dist/types/index.d.ts",
   "scripts": {
-    "build:types": "tsc",
+    "build": "pnpm bundle",
+    "build:w": "pnpm bundle -w",
     "lint": "pnpm eslint .",
-    "clean": "rm -rf dist",
     "start": "node --watch  ./dist/esm/index.mjs",
-    "build": "pnpm exec build",
-    "build:w": "vite build --watch",
     "git": "rm -rf dist && pnpm build && read -p \"Enter commit message: \" msg; git add .; git commit -m \"$msg\"; git push && npm publish --access public"
   },
   "keywords": [
