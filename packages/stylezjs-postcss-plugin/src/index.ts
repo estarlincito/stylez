@@ -1,14 +1,22 @@
-import type postcss from 'postcss';
+import { writeFileSync } from 'node:fs';
 
-import saving from './lib/saving.js';
-import { extractStylesFromFiles } from './lib/swc-extractor.js';
+import autoprefixer from 'autoprefixer';
+import postcss from 'postcss';
+import { parse } from 'postcss-js';
+import nested from 'postcss-nested';
+
+import { extractStylesFromFiles } from './scripts/extractor.js';
 
 const state = {
   duplicatesFound: false,
   processed: false,
 };
 
-const plugin = ({ patterns }: { patterns: string[] }) => ({
+interface PluginOptions {
+  patterns?: string[];
+}
+
+const plugin: postcss.PluginCreator<PluginOptions> = (opts) => ({
   async Once(root: postcss.Root) {
     if (state.duplicatesFound) return;
 
@@ -24,20 +32,30 @@ const plugin = ({ patterns }: { patterns: string[] }) => ({
         return;
       }
 
-      state.processed = true;
-      const extractedRoot = await extractStylesFromFiles(patterns);
+      try {
+        state.processed = true;
 
-      if (state.duplicatesFound) return;
+        const styles = await extractStylesFromFiles(opts?.patterns ?? []);
 
-      root.removeAll();
+        if (state.duplicatesFound) return;
 
-      extractedRoot.each((node) => {
-        root.append(node.clone());
-      });
+        root.removeAll();
 
-      await saving(root, filePath);
+        const result = await postcss([nested, autoprefixer]).process(styles, {
+          from: undefined,
+          parser: parse,
+        });
 
-      process.stdout.write(`🎨 Styles saved to: ${filePath}\n\n`);
+        if (result.css.length === 0) return;
+
+        const finalCSS = `@stylez;\n\n${result.css}`;
+
+        writeFileSync(filePath, finalCSS);
+
+        process.stdout.write(`🎨 Styles saved to: ${filePath}\n\n`);
+      } catch {
+        process.stdout.write('Issue saving styles');
+      }
     }
   },
 
@@ -45,9 +63,5 @@ const plugin = ({ patterns }: { patterns: string[] }) => ({
 });
 
 plugin.postcss = true;
-export default plugin;
 
-// void extractStylesFromFiles(['**/*test.js']).then((result) => {
-//   // eslint-disable-next-line no-console
-//   console.log(result.toString());
-// });
+export default plugin;

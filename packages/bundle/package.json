@@ -1,0 +1,30 @@
+{
+  "name": "@repo/bundle",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "types": "./dist/types/index.d.ts",
+  "bin": {
+    "bundle": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "node esbuild.config.js",
+    "build:types": "tsc --project tsconfig.json",
+    "build:w": "node esbuild.config.js -w",
+    "lint": "eslint .",
+    "start": "node --watch  ./dist/index.js",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@estarlincito/utils": "^2.5.2",
+    "esbuild": "^0.25.2",
+    "fast-glob": "^3.3.3"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "dts-bundle-generator": "^9.5.1",
+    "jest": "^29.7.0",
+    "tsup": "^8.4.0",
+    "vitest": "^3.1.2"
+  }
+}

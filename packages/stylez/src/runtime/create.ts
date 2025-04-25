@@ -1,6 +1,6 @@
-import { type Styles, toSelector } from '@repo/lib';
-
-import { generateCssFrom } from '@/utils/generate-css.js';
+import { toSelector } from '../core/lib/selector.js';
+import { toCssGenerate } from '../core/utils/css-generate.js';
+import type { Styles } from '../types.js';
 
 const seen = new Set<string>();
 const css: Styles[] = [];
@@ -18,6 +18,7 @@ const css: Styles[] = [];
  * @example
  * const styles = stylez.create({ color: 'red', fontSize: '1.2rem' });
  */
+
 export const create = (styles: Styles) => {
   const hash = toSelector(styles);
 
@@ -30,24 +31,7 @@ export const create = (styles: Styles) => {
 };
 
 /**
- * Returns a frozen object containing the className string
- * for a given style object.
- *
- * This does not register or collect the style — it must be passed
- * a style object previously created via `stylez.create()`.
- *
- * @param styles - A style object previously passed to `stylez.create`.
- * @returns An object like `{ className: 'zbf3a8096' }`.
- *
- * @example
- * const styles = stylez.create({ padding: '1rem' });
- *
- * const App = () => <div {...stylez.className(styles)}>Hello</div>;
- */
-export const className = (styles: Styles) =>
-  Object.freeze({ className: toSelector(styles) });
-/**
  * 🚫 INTERNAL USE ONLY — Used by @stylezjs/stylez build tools to extract generated CSS.
  * Not intended for runtime usage.
  */
-export const getAllCss = () => generateCssFrom(css);
+export const getAllCss = () => Object.fromEntries(toCssGenerate(css));

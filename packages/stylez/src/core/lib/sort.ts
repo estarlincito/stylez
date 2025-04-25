@@ -1,9 +1,7 @@
-/* eslint-disable no-magic-numbers */
+import type { Styles } from '../../types.js';
 
-export type stylesProps = Record<string, string | Record<string, string>>;
-
-export const normalizeStyles = (styles: stylesProps): stylesProps => {
-  const data = Object.fromEntries(
+export const toSort = (styles: Styles): Styles =>
+  Object.fromEntries(
     Object.entries(styles)
       .sort(([keyA], [keyB]) => {
         const isSelectorA = keyA.startsWith('&');
@@ -17,10 +15,7 @@ export const normalizeStyles = (styles: stylesProps): stylesProps => {
       .map(([key, value]) => [
         key,
         typeof value === 'object' && value !== null && !Array.isArray(value)
-          ? normalizeStyles(value)
+          ? toSort(value as Styles)
           : value,
       ]),
-  ) as stylesProps;
-
-  return data;
-};
+  ) as unknown as Styles;

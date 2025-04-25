@@ -43,7 +43,7 @@ export default {
 You can now create dynamic CSS class names and apply them to your React components.
 
 ```ts
-import stylez from '@stylezjs/stylez';
+import * as stylez from '@stylezjs/stylez';
 
 // Define styles
 const styles = stylez.create({
