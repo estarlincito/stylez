@@ -17,13 +17,14 @@ const isFooter = (format: string) =>
     : { minify: true };
 
 export const runBuild = async (isWatch: boolean) => {
-  console.log();
   const buildConfigs = await Promise.all(
     formats.map(
       async ({ ext, format }) =>
         ({
           bundle: true,
+          define: { 'process.env.BUILD_FORMAT': `'${format}'` },
           entryPoints: ['src/index.ts'],
+          mainFields: ['main', 'module'],
           ...isFooter(format),
           format,
           logLevel: 'info',

@@ -65,3 +65,23 @@ const plugin: postcss.PluginCreator<PluginOptions> = (opts) => ({
 plugin.postcss = true;
 
 export default plugin;
+
+// Test
+// void (async () => {
+//   const styles = await extractStylesFromFiles(['src/test/**/*.mts']);
+
+//   if (state.duplicatesFound) return;
+
+//   const result = await postcss([nested, autoprefixer]).process(styles, {
+//     from: undefined,
+//     parser: parse,
+//   });
+
+//   if (result.css.length === 0) return;
+
+//   const finalCSS = `@stylez;\n\n${result.css}`;
+
+//   // writeFileSync(filePath, finalCSS);
+
+//   process.stdout.write(finalCSS);
+// })();

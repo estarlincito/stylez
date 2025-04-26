@@ -1,6 +1,6 @@
 {
   "name": "@stylezjs/postcss-plugin",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "@stylezjs/postcss-plugin is a PostCSS plugin for integrating `@stylezjs/stylez` to generate static CSS styles. Stylez → 'Z' of Zero Runtime.",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -9,7 +9,7 @@
   "scripts": {
     "build": "pnpm bundle",
     "build:w": "pnpm bundle -w",
-    "start": "node --watch ./dist/index.js",
+    "start": "node --watch ./dist/index.cjs",
     "lint": "pnpm eslint ."
   },
   "files": [

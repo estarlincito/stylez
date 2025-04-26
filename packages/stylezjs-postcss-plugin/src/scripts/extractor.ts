@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable no-await-in-loop */
 
 import pkg from 'fast-glob';
@@ -14,27 +15,38 @@ if (!existsSync(tmpDir)) {
 
 export const extractStylesFromFiles = async (patterns: string[]) => {
   const entryFiles = await glob(patterns);
+  const format = process.env.BUILD_FORMAT as 'cjs' | 'esm';
 
   for (const entry of entryFiles) {
-    const tmpFile = path.join(tmpDir, `tmp-${path.basename(entry)}.mjs`);
+    const tmpFile = path.join(tmpDir, `tmp-${path.basename(entry)}.js`);
 
     await build({
       bundle: true,
       entryPoints: [entry],
       external: ['@stylezjs/stylez'],
-      format: 'esm',
+      format,
       minify: true,
       outfile: tmpFile,
       platform: 'node',
     });
 
-    // return 'entry';
-    await import(path.resolve(tmpFile));
+    if (format === 'esm') {
+      await import(path.resolve(tmpFile));
+    } else {
+      require(path.resolve(tmpFile));
+    }
+
     rmSync(tmpDir, { force: true, recursive: true });
   }
 
-  const { getAllCss } = await import('@stylezjs/stylez');
-  const finalCss = getAllCss();
+  let finalCss;
+  if (format === 'esm') {
+    const { getAllCss } = await import('@stylezjs/stylez');
+    finalCss = getAllCss();
+  } else {
+    const { getAllCss } = require('@stylezjs/stylez');
+    finalCss = getAllCss();
+  }
 
   return finalCss;
 };

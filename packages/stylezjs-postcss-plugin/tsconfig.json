@@ -7,5 +7,5 @@
     "paths": { "@/*": ["src/*"] },
     "emitDeclarationOnly": true
   },
-  "include": ["src/**/*.ts", "src/scripts/extractor.ts"]
+  "include": ["src/**/*.ts"]
 }
